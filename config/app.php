@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Utils as GuzzleUtils;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -70,7 +71,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Taipei',
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +84,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh_TW',
 
     /*
     |--------------------------------------------------------------------------
@@ -141,7 +142,7 @@ return [
 
     'maintenance' => [
         'driver' => 'file',
-        // 'store' => 'redis',
+        // 'store'  => 'redis',
     ],
 
     /*
@@ -184,5 +185,12 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    'user_agent' => env('USER_AGENT', GuzzleUtils::defaultUserAgent()),
+
+    'sgo' => [
+        'stop_rest'      => (float) env('SGO_STOP_REST_PERCENTAGE', 0.95),
+        'stop_replenish' => (float) env('SGO_STOP_REPLENISH_PERCENTAGE', 0.95),
+    ],
 
 ];
