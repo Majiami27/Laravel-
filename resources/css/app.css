@@ -1,0 +1,9 @@
+/* background-color */
+.bg-secondary-gradual {
+    background: linear-gradient(to bottom, #efefef 30%, #e1f8ff);
+    background-repeat: repeat-x;
+}
+
+.bg-white-opacity-25 {
+    background-color: rgba(255, 255, 255, 0.5);
+}

@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('machine', 'App\Http\Controllers\api\WifiMachineController@index');
+// Route::get('posts', 'App\Http\Controllers\api\PostController@index');
