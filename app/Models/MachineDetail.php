@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTimeInterface;
 
-class Machine extends Model
+class MachineDetail extends Model
 {
     // use HasApiTokens, HasFactory, Notifiable;
 

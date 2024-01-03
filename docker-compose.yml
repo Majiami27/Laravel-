@@ -25,34 +25,19 @@ services:
     restart: unless-stopped
     depends_on:
       - database
-      - cache
-
-  cache:
-    image: redis:7.2-rc2-alpine
-    container_name: ${CONTAINER_NAME_PREFIX}-Cache
-    hostname: ${CONTAINER_HOST_PREFIX}-cache
-    volumes:
-      - ${DOCKER_VOLUME_PATH}/redis:/data
-    networks:
-      default:
-        ipv4_address: ${DOCKER_CACHE_IPV4}
-    ports:
-      - ${DOCKER_CACHE_PORT:-6379}:6379
-    healthcheck:
-      test: [ 'CMD', 'redis-cli', 'ping' ]
 
   database:
     image: mysql:latest
     container_name: ${CONTAINER_NAME_PREFIX}-Database
     hostname: ${CONTAINER_HOST_PREFIX}-database
     environment:
-      - MYSQL_ROOT_PASSWORD=${DOCKER_DB_PASSWORD}
-      - MYSQL_USER=admin
-      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=${DOCKER_DB_ROOT_PASSWORD}
+      - MYSQL_USER=${DOCKER_DB_USERNAME}
+      - MYSQL_PASSWORD=${DOCKER_DB_PASSWORD}
       - TZ=${MYSQL_TIMEZONE}
       - PGTZ=${MYSQL_TIMEZONE}
     volumes:
-      - ${DOCKER_VOLUME_PATH}/mysql:/var/lib/mysql
+      - /var/lib/mysql
     networks:
       default:
         ipv4_address: ${DOCKER_DB_IPV4}

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <title>Wifi控制系統 - 登入</title>
+
+
 
     <div id="app">
         <div class="row align-items-center m-0 p-5" style="height: 100vh;">
@@ -41,6 +44,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 </html>
 

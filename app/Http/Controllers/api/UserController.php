@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Machine;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -14,29 +16,29 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $list = array();
-
-        if (!isset($request->type)) {
-            $list = Post::orderBy('establish_date', 'desc')->get();
-        } else {
-            $list = Post::orderBy('establish_date', 'desc')
-                ->where('type', '=', $request->type)
-                ->get();
-        }
-
-        if (isset($request->tag)) {
-            $filteredList = [];
-            foreach ($list as $postEntity) {
-                foreach ($postEntity->tags as $tagName) {
-                    if ($tagName == $request->tag) {
-                        array_push($filteredList, $postEntity);
-                        continue;
-                    }
-                }
-            }
-            $list = $filteredList;
-        }
+        // if (!isset($request->type)) {
+        $list = User::orderBy('pk', 'desc')->get();
+        // }
 
         return response()->json($list, 200);
+    }
+
+    /**
+     * 建立新帳號
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function create(Request $request)
+    {
+        $data = [
+            "email" => $request->email,
+            "user_id" => $request->userId,
+            "password" => $request->pwd,
+        ];
+
+        $list = User::create($data);
+
+        return response()->json("RS_TEST", 200);
     }
 }

@@ -3,40 +3,42 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\machine;
+use App\Models\Machine;
 
+/**
+ * Wifi繼電器 控制器
+ */
 class WifiMachineController extends Controller
 {
+
+    protected static $_uniqueInstance = null;
+
+    /**
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (self::$_uniqueInstance == null) self::$_uniqueInstance = new self();
+        return self::$_uniqueInstance;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        $list = array();
+        $list = [
+            "macAddr" => "123"
+        ];
 
-        if (!isset($request->type)) {
-            $list = machine::orderBy('pk', 'desc')->get();
-        } else {
-            $list = machine::orderBy('pk', 'desc')
-                ->where('type', '=', $request->type)
-                ->get();
-        }
-
-        if (isset($request->tag)) {
-            $filteredList = [];
-            foreach ($list as $postEntity) {
-                foreach ($postEntity->tags as $tagName) {
-                    if ($tagName == $request->tag) {
-                        array_push($filteredList, $postEntity);
-                        continue;
-                    }
-                }
-            }
-            $list = $filteredList;
-        }
+//        if (!isset($request->type)) {
+        $list = Machine::orderBy('create_dtm', 'desc')->get();
+//        $list = User::orderBy('pk', 'desc')->get();
+//        }
 
         return response()->json($list, 200);
     }
